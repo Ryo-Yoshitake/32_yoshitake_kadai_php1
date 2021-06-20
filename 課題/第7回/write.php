@@ -9,6 +9,11 @@ $youbou = $_POST["youbou"];
 // 申込時間取得
 $date = date("Y/m/d H:i:s");
 
+// ファイルに書き込む配列を定義
+$ary = array(
+    array("$date", "$name", "$mail", "$nenrei", "$youbou")
+);
+
 // // DB接続
 // try{
 //     $pdo = new PDO('mysql:dbname=gs_db;charset=utf8;host=localhost','root','');
@@ -28,11 +33,26 @@ $date = date("Y/m/d H:i:s");
 // $stmt->bindValue(':a4', $youbou, PDO::PARAM_STR);
 // $status = $stmt->execute();
 
+// // データ登録処理後
+// if($status==false){
+//     $error = $stmt->errorInfo();
+//     exit("QueryError:".$error[2]);
+// }else{
+//     header("Location: read.php");
+//     exit;
+// }
+
 
 // ファイルを読み込む
-$file = fopen("data.txt","a");
+$file = fopen("data.csv","a");
 // ファイルに書き込む
-fwrite($file,$date." ".$name." ".$mail." ".$nenrei." ".$youbou."\n");
+// fwrite($file,$date.",".$name.",".$mail.",".$nenrei.",".$youbou."\n");
+foreach($ary as $line){
+    fputcsv($filw,$line);
+};
+
+// ,$date." ".$name." ".$mail." ".$nenrei." ".$youbou."\n");
+
 // ファイルを閉じる
 fclose($file);
 
